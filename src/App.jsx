@@ -1,28 +1,43 @@
-import { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import Auth from './components/Auth'
+import Choose from './components/Choose'
+import Dietician from './components/Dietician'
+import Recipes from './components/Recipes'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <>
+      <Hero />
+      <section id="how" className="bg-black text-white">
+        <div className="max-w-6xl mx-auto px-4 py-16">
+          <div className="grid md:grid-cols-3 gap-6">
+            {[{t:'Create an account',d:'Sign up to save preferences and unlock your personalized dietician.'},{t:'Pick your path',d:'Choose between AI Dietician for guidance or Recipe Finder for ideas.'},{t:'Enjoy the results',d:'Get smooth UI, subtle animations and clean visuals in dark neon style.'}].map((x,i)=> (
+              <div key={i} className="rounded-2xl border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition">
+                <h3 className="text-xl font-bold">{x.t}</h3>
+                <p className="text-white/70">{x.d}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/choose" element={<Choose />} />
+        <Route path="/dietician" element={<Dietician />} />
+        <Route path="/recipes" element={<Recipes />} />
+      </Routes>
+      <footer className="bg-black border-t border-white/10 text-white/60 py-8 text-center">Made with care • Black, Green and Orange vibes</footer>
+    </div>
+  )
+}
