@@ -3,6 +3,7 @@ import { useState } from 'react'
 export default function Dietician() {
   const [form, setForm] = useState({
     name: '', age: '', height_cm: '', weight_kg: '',
+    gender: 'male',
     health_issues: '', medical_history: '', food_type: 'veg',
     goal: 'lose-weight', extra_notes: ''
   })
@@ -38,6 +39,22 @@ export default function Dietician() {
             <input className="px-4 py-3 rounded-lg bg-white/10 border border-white/10" placeholder="Height (cm)" value={form.height_cm} onChange={e=>update('height_cm', e.target.value)} />
             <input className="px-4 py-3 rounded-lg bg-white/10 border border-white/10" placeholder="Weight (kg)" value={form.weight_kg} onChange={e=>update('weight_kg', e.target.value)} />
           </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            <label className={`flex items-center gap-2 px-4 py-3 rounded-lg border cursor-pointer transition ${form.gender==='male'?'bg-emerald-500/20 border-emerald-500/50':'bg-white/10 border-white/10 hover:border-white/20'}`}> 
+              <input type="radio" name="gender" className="hidden" checked={form.gender==='male'} onChange={()=>update('gender','male')} />
+              <span>Male</span>
+            </label>
+            <label className={`flex items-center gap-2 px-4 py-3 rounded-lg border cursor-pointer transition ${form.gender==='female'?'bg-emerald-500/20 border-emerald-500/50':'bg-white/10 border-white/10 hover:border-white/20'}`}>
+              <input type="radio" name="gender" className="hidden" checked={form.gender==='female'} onChange={()=>update('gender','female')} />
+              <span>Female</span>
+            </label>
+            <label className={`flex items-center gap-2 px-4 py-3 rounded-lg border cursor-pointer transition ${form.gender==='transgender'?'bg-emerald-500/20 border-emerald-500/50':'bg-white/10 border-white/10 hover:border-white/20'}`}>
+              <input type="radio" name="gender" className="hidden" checked={form.gender==='transgender'} onChange={()=>update('gender','transgender')} />
+              <span>Transgender</span>
+            </label>
+          </div>
+
           <textarea className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10" placeholder="Any health issues" value={form.health_issues} onChange={e=>update('health_issues', e.target.value)} />
           <textarea className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10" placeholder="Past medical experience" value={form.medical_history} onChange={e=>update('medical_history', e.target.value)} />
 

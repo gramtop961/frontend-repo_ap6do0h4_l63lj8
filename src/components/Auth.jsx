@@ -17,14 +17,20 @@ export default function Auth() {
     e.preventDefault()
     setLoading(true); setError('')
     try {
+      if (!email || !password || (mode==='signup' && !name)) {
+        throw new Error('Please fill all required fields')
+      }
       const base = import.meta.env.VITE_BACKEND_URL
+      if (!base) throw new Error('Backend URL is not configured')
       const res = await fetch(`${base}/auth/${mode}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })
       })
-      if (!res.ok) throw new Error((await res.json()).detail || 'Failed')
-      await res.json()
+      const data = await res.json().catch(()=>({}))
+      if (!res.ok) throw new Error(data?.detail || 'Authentication failed')
+      // Save simple session marker
+      localStorage.setItem('diet_app_user', JSON.stringify({ email: data.email || email, name: data.name || name }))
       navigate('/choose')
     } catch (err) {
       setError(err.message)
